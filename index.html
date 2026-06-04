@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sustainable Courses — Texas A&M OSCE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --maroon: #500000;
+    --green-light: #a6ce3f;
+    --green-mid: #65933f;
+    --green-dark: #4b7538;
+    --green-deeper: #013120;
+    --green-pale: #abcda2;
+    --green-muted: #899b83;
+    --green-faint: #bec8bb;
+    --off-white: #f7f6f2;
+    --white: #ffffff;
+    --text-dark: #1a1a1a;
+    --text-mid: #444;
+    --text-light: #777;
+    --card-border: #e0e5dc;
+    --focused-bg: #eef5e6;
+    --inclusive-bg: #f4f7f0;
+    --non-bg: #f7f6f4;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--off-white);
+    color: var(--text-dark);
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ── */
+  header {
+    background: var(--green-deeper);
+    padding: 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 20px rgba(1,49,32,0.3);
+  }
+  .header-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 18px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .logo-group {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .logo-mark {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: var(--green-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+  }
+  .logo-text {
+    font-family: 'Playfair Display', serif;
+    color: var(--white);
+    font-size: 1.15rem;
+    font-weight: 600;
+    line-height: 1.2;
+  }
+  .logo-sub {
+    color: var(--green-pale);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 300;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .header-tag {
+    background: rgba(166,206,63,0.15);
+    border: 1px solid rgba(166,206,63,0.3);
+    color: var(--green-light);
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-weight: 500;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(135deg, var(--green-deeper) 0%, #194007 60%, #22520c 100%);
+    padding: 72px 32px 56px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 70% 50%, rgba(166,206,63,0.08) 0%, transparent 60%),
+                radial-gradient(ellipse at 20% 80%, rgba(75,117,56,0.15) 0%, transparent 50%);
+    pointer-events: none;
+  }
+  .hero-eyebrow {
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--green-light);
+    font-weight: 600;
+    margin-bottom: 16px;
+    opacity: 0;
+    animation: fadeUp 0.6s ease 0.1s forwards;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    color: var(--white);
+    font-weight: 700;
+    line-height: 1.15;
+    margin-bottom: 18px;
+    opacity: 0;
+    animation: fadeUp 0.6s ease 0.2s forwards;
+  }
+  .hero h1 em {
+    font-style: normal;
+    color: var(--green-light);
+  }
+  .hero-desc {
+    color: var(--green-pale);
+    font-size: 1.05rem;
+    font-weight: 300;
+    max-width: 560px;
+    margin: 0 auto 36px;
+    line-height: 1.7;
+    opacity: 0;
+    animation: fadeUp 0.6s ease 0.3s forwards;
+  }
+  .hero-stats {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    opacity: 0;
+    animation: fadeUp 0.6s ease 0.4s forwards;
+  }
+  .stat {
+    text-align: center;
+  }
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--green-light);
+    display: block;
+    line-height: 1;
+  }
+  .stat-label {
+    font-size: 0.72rem;
+    color: var(--green-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-top: 4px;
+    display: block;
+  }
+
+  /* ── CONTROLS ── */
+  .controls-wrap {
+    background: var(--white);
+    border-bottom: 1px solid var(--card-border);
+    position: sticky;
+    top: 74px;
+    z-index: 90;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+  }
+  .controls {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 16px 32px;
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .search-wrap {
+    position: relative;
+    flex: 1;
+    min-width: 220px;
+  }
+  .search-icon {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-light);
+    font-size: 15px;
+    pointer-events: none;
+  }
+  input[type="search"] {
+    width: 100%;
+    padding: 10px 14px 10px 40px;
+    border: 1.5px solid var(--card-border);
+    border-radius: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    color: var(--text-dark);
+    background: var(--off-white);
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  input[type="search"]:focus { border-color: var(--green-mid); }
+
+  select {
+    padding: 10px 14px;
+    border: 1.5px solid var(--card-border);
+    border-radius: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem;
+    color: var(--text-dark);
+    background: var(--off-white);
+    outline: none;
+    cursor: pointer;
+    transition: border-color 0.2s;
+    appearance: none;
+    padding-right: 32px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23777' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+  }
+  select:focus { border-color: var(--green-mid); }
+
+  .result-count {
+    font-size: 0.82rem;
+    color: var(--text-light);
+    white-space: nowrap;
+    margin-left: auto;
+  }
+  .result-count strong { color: var(--green-dark); }
+
+  /* ── LEGEND ── */
+  .legend-wrap {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px 32px 4px;
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.82rem;
+    color: var(--text-mid);
+  }
+  .legend-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 3px;
+    flex-shrink: 0;
+  }
+  .dot-focused { background: var(--green-dark); }
+  .dot-inclusive { background: var(--green-pale); border: 1px solid var(--green-muted); }
+  .dot-non { background: var(--green-faint); border: 1px solid #ccc; }
+
+  /* ── SDG PILLS FILTER ── */
+  .sdg-filter-wrap {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 12px 32px 16px;
+  }
+  .sdg-filter-label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-light);
+    margin-bottom: 10px;
+    font-weight: 600;
+  }
+  .sdg-pills {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .sdg-pill {
+    padding: 5px 11px;
+    border-radius: 20px;
+    font-size: 0.76rem;
+    font-weight: 500;
+    cursor: pointer;
+    border: 1.5px solid transparent;
+    transition: all 0.15s;
+    user-select: none;
+    white-space: nowrap;
+  }
+  .sdg-pill.inactive {
+    background: var(--off-white);
+    border-color: var(--card-border);
+    color: var(--text-mid);
+  }
+  .sdg-pill.active {
+    background: var(--green-dark);
+    border-color: var(--green-dark);
+    color: white;
+  }
+  .sdg-pill.inactive:hover {
+    border-color: var(--green-mid);
+    color: var(--green-dark);
+  }
+
+  /* ── GRID ── */
+  .grid-wrap {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 8px 32px 64px;
+  }
+  .courses-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 18px;
+  }
+
+  /* ── CARD ── */
+  .card {
+    background: var(--white);
+    border: 1.5px solid var(--card-border);
+    border-radius: 12px;
+    padding: 22px 24px;
+    transition: all 0.2s ease;
+    cursor: default;
+    position: relative;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(12px);
+    animation: cardIn 0.4s ease forwards;
+  }
+  .card::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 4px;
+    border-radius: 12px 0 0 12px;
+  }
+  .card.focused::before { background: var(--green-dark); }
+  .card.inclusive::before { background: var(--green-pale); }
+  .card.non::before { background: var(--green-faint); }
+
+  .card:hover {
+    border-color: var(--green-mid);
+    box-shadow: 0 4px 20px rgba(75,117,56,0.12);
+    transform: translateY(-2px);
+  }
+
+  .card-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  .course-code {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--green-mid);
+  }
+  .classification-badge {
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    padding: 3px 9px;
+    border-radius: 20px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .badge-focused {
+    background: var(--focused-bg);
+    color: var(--green-dark);
+    border: 1px solid rgba(75,117,56,0.2);
+  }
+  .badge-inclusive {
+    background: var(--inclusive-bg);
+    color: #4a7a3a;
+    border: 1px solid rgba(139,179,127,0.3);
+  }
+  .badge-non {
+    background: var(--non-bg);
+    color: #888;
+    border: 1px solid #e0ddd8;
+  }
+
+  .course-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.02rem;
+    font-weight: 600;
+    color: var(--text-dark);
+    line-height: 1.3;
+    margin-bottom: 8px;
+  }
+  .course-desc {
+    font-size: 0.83rem;
+    color: var(--text-light);
+    line-height: 1.6;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    line-clamp: 3; /* Add this line */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    margin-bottom: 14px;
+}
+
+  .card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .sdg-tags {
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
+  }
+  .sdg-tag {
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 4px;
+    background: rgba(101,147,63,0.1);
+    color: var(--green-mid);
+    border: 1px solid rgba(101,147,63,0.2);
+  }
+  .syllabus-link {
+    font-size: 0.75rem;
+    color: var(--green-dark);
+    text-decoration: none;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    transition: color 0.15s;
+  }
+  .syllabus-link:hover { color: var(--green-light); }
+
+  /* ── EMPTY STATE ── */
+  .empty {
+    text-align: center;
+    padding: 80px 20px;
+    grid-column: 1/-1;
+  }
+  .empty-icon { font-size: 48px; margin-bottom: 16px; opacity: 0.4; }
+  .empty h3 {
+    font-family: 'Playfair Display', serif;
+    color: var(--text-mid);
+    margin-bottom: 8px;
+  }
+  .empty p { font-size: 0.9rem; color: var(--text-light); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--green-deeper);
+    color: var(--green-muted);
+    text-align: center;
+    padding: 28px 32px;
+    font-size: 0.78rem;
+    letter-spacing: 0.04em;
+  }
+  footer a { color: var(--green-pale); text-decoration: none; }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes cardIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── DEMO BANNER ── */
+  .demo-banner {
+    background: linear-gradient(90deg, var(--maroon), #7a0000);
+    color: white;
+    text-align: center;
+    padding: 10px 20px;
+    font-size: 0.78rem;
+    letter-spacing: 0.05em;
+    font-weight: 500;
+  }
+  .demo-banner em { font-style: normal; color: #ffb3b3; }
+
+  @media (max-width: 640px) {
+    .controls { flex-direction: column; }
+    .hero-stats { gap: 24px; }
+    .courses-grid { grid-template-columns: 1fr; }
+    .header-inner { padding: 14px 18px; }
+    .grid-wrap, .legend-wrap, .sdg-filter-wrap { padding-left: 18px; padding-right: 18px; }
+    .controls { padding: 12px 18px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="demo-banner">
+  ⚡ <em>Demo prototype</em> — OSCE Sustainable Course Guide &nbsp;·&nbsp; AREN Department Sample Data
+</div>
+
+<header>
+  <div class="header-inner">
+    <div class="logo-group">
+      <div class="logo-mark">🌿</div>
+      <div>
+        <div class="logo-text">Sustainable Courses</div>
+        <div class="logo-sub">Texas A&M · OSCE</div>
+      </div>
+    </div>
+    <div class="header-tag">STARS Classified</div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-eyebrow">Office of Sustainability & Campus Enrichment</div>
+  <h1>Find Your <em>Sustainable</em> Course</h1>
+  <p class="hero-desc">Explore Texas A&M courses classified by their sustainability content — from focused programs to inclusive offerings — aligned to the UN Sustainable Development Goals.</p>
+  <div class="hero-stats">
+    <div class="stat">
+      <span class="stat-num" id="stat-total">0</span>
+      <span class="stat-label">Courses Listed</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num" id="stat-focused">0</span>
+      <span class="stat-label">Focused</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num" id="stat-inclusive">0</span>
+      <span class="stat-label">Inclusive</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num" id="stat-sdgs">17</span>
+      <span class="stat-label">SDGs Covered</span>
+    </div>
+  </div>
+</section>
+
+<div class="controls-wrap">
+  <div class="controls">
+    <div class="search-wrap">
+      <span class="search-icon">🔍</span>
+      <input type="search" id="search" placeholder="Search courses, topics, keywords…">
+    </div>
+    <select id="filter-class">
+      <option value="">All Classifications</option>
+      <option value="focused">Sustainability Focused</option>
+      <option value="inclusive">Sustainability Inclusive</option>
+      <option value="non">Non-Sustainable</option>
+    </select>
+    <select id="filter-dept">
+      <option value="">All Departments</option>
+    </select>
+    <select id="sort">
+      <option value="code">Sort: Course Code</option>
+      <option value="name">Sort: Name A–Z</option>
+      <option value="classification">Sort: Classification</option>
+    </select>
+    <div class="result-count"><strong id="count">0</strong> courses</div>
+  </div>
+</div>
+
+<div class="legend-wrap">
+  <div class="legend-item"><div class="legend-dot dot-focused"></div> Sustainability Focused — sustainability is central to the course</div>
+  <div class="legend-item"><div class="legend-dot dot-inclusive"></div> Sustainability Inclusive — sustainability addressed but not central</div>
+  <div class="legend-item"><div class="legend-dot dot-non"></div> Non-Sustainable — no significant sustainability content</div>
+</div>
+
+<div class="sdg-filter-wrap">
+  <div class="sdg-filter-label">Filter by SDG</div>
+  <div class="sdg-pills" id="sdg-pills"></div>
+</div>
+
+<div class="grid-wrap">
+  <div class="courses-grid" id="grid"></div>
+</div>
+
+<footer>
+  <p>Texas A&M University · Office of Sustainability &amp; Campus Enrichment · <a href="https://sustainability.tamu.edu">sustainability.tamu.edu</a></p>
+  <p style="margin-top:6px;opacity:0.6;">Classifications based on AASHE STARS criteria · SDG alignment per UN Sustainable Development Goals</p>
+</footer>
+
+<script>
+const SDG_LABELS = {
+  1:'No Poverty',2:'Zero Hunger',3:'Good Health',4:'Quality Education',
+  5:'Gender Equality',6:'Clean Water',7:'Clean Energy',8:'Decent Work',
+  9:'Industry & Innovation',10:'Reduced Inequalities',11:'Sustainable Cities',
+  12:'Responsible Consumption',13:'Climate Action',14:'Life Below Water',
+  15:'Life on Land',16:'Peace & Justice',17:'Partnerships'
+};
+
+const COURSES = [
+  {
+    code:'AREN 200', name:'Architectural Engineering Foundations', dept:'AREN',
+    college:'Engineering', classification:'focused',
+    sdgs:[11,9],
+    desc:'Introduction to architectural engineering systems and professional practice; emphasis on building envelope, structural, mechanical, and lighting systems; sustainability as it relates to building system design.',
+    syllabus:'#'
+  },
+  {
+    code:'AREN 210', name:'Fundamentals of Building Information Modeling', dept:'AREN',
+    college:'Engineering', classification:'non',
+    sdgs:[],
+    desc:'Application of engineering design, document production, and interdisciplinary coordination using 3D parametric modeling software for structural and MEP systems.',
+    syllabus:'#'
+  },
+  {
+    code:'AREN 221', name:'Engineering Mechanics — Statics & Dynamics', dept:'AREN',
+    college:'Engineering', classification:'non',
+    sdgs:[],
+    desc:'Principles of statics, kinematics, and kinetics with attention to architectural engineering applications; force systems, equilibrium, trusses, frames, and energy methods.',
+    syllabus:'#'
+  },
+  {
+    code:'AREN 281', name:'Architectural Engineering Seminar', dept:'AREN',
+    college:'Engineering', classification:'inclusive',
+    sdgs:[9],
+    desc:'Exploration of architectural engineering subfields, curriculum resources, internship opportunities, and current professional challenges including ethical implications.',
+    syllabus:'#'
+  },
+  {
+    code:'AREN 285', name:'Directed Studies', dept:'AREN',
+    college:'Engineering', classification:'non',
+    sdgs:[],
+    desc:'Directed studies within the field of architectural engineering. Topics vary by instructor and semester.',
+    syllabus:'#'
+  },
+  {
+    code:'AREN 289', name:'Special Topics', dept:'AREN',
+    college:'Engineering', classification:'non',
+    sdgs:[],
+    desc:'Selected topics in an identified area of architectural engineering. May be repeated for credit.',
+    syllabus:'#'
+  },
+  {
+    code:'AREN 300', name:'Architectural Engineering Systems', dept:'AREN',
+    college:'Engineering', classification:'focused',
+    sdgs:[7,9,11,13],
+    desc:'Comprehensive knowledge of building systems covering structural, HVAC, electrical, and fire safety engineering; sustainability aspects including net zero energy, water, waste, and carbon.',
+    syllabus:'#'
+  },
+  {
+    code:'AREN 310', name:'Thermal-Fluid Sciences I', dept:'AREN',
+    college:'Engineering', classification:'inclusive',
+    sdgs:[7],
+    desc:'Fundamental theory and practical application of thermal-fluid sciences; thermodynamics, psychrometric analysis, refrigeration cycles, and fluid behavior for architectural engineering.',
+    syllabus:'#'
+  },
+  {
+    code:'AREN 311', name:'Thermal-Fluid Sciences II', dept:'AREN',
+    college:'Engineering', classification:'inclusive',
+    sdgs:[7],
+    desc:'Continued thermal-fluid theory; heat exchangers, open channel flow, conduction, convection, radiation, and introduction to computational fluid dynamics for building applications.',
+    syllabus:'#'
+  },
+  {
+    code:'AREN 320', name:'Lighting Engineering for Buildings', dept:'AREN',
+    college:'Engineering', classification:'inclusive',
+    sdgs:[7,11],
+    desc:'Design and analysis of electrical lighting systems; integration between lighting design process and technical foundations; lighting calculations, power budgets, and human comfort.',
+    syllabus:'#'
+  },
+  {
+    code:'AREN 330', name:'Mechanical Systems for Buildings', dept:'AREN',
+    college:'Engineering', classification:'inclusive',
+    sdgs:[3,11],
+    desc:'Qualitative and quantitative study of HVAC systems; thermal behavior of buildings, human comfort, psychometrics, indoor air quality, and fire suppression systems.',
+    syllabus:'#'
+  },
+  {
+    code:'AREN 399', name:'High Impact Experience', dept:'AREN',
+    college:'Engineering', classification:'non',
+    sdgs:[],
+    desc:'Participation in an approved high-impact learning experience; reflection on professional outcomes from the NSPE Engineering Body of Knowledge.',
+    syllabus:'#'
+  },
+  {
+    code:'AREN 401', name:'Architectural Engineering Design I', dept:'AREN',
+    college:'Engineering', classification:'inclusive',
+    sdgs:[9,11],
+    desc:'Instruction and practice in the engineering design process applied to a major architectural engineering project; requirements, alternative concepts, trade-off studies, and embodiment design.',
+    syllabus:'#'
+  },
+  {
+    code:'AREN 402', name:'Architectural Engineering Design II', dept:'AREN',
+    college:'Engineering', classification:'non',
+    sdgs:[],
+    desc:'Extension of engineering design fundamentals; project management, intellectual property, product liability, ethical responsibility, and major design project development.',
+    syllabus:'#'
+  },
+  {
+    code:'AREN 416', name:'Smart Building Technology', dept:'AREN',
+    college:'Engineering', classification:'focused',
+    sdgs:[7,9,11,13],
+    desc:'Fundamentals of smart building design, control, and integration; building energy modeling, IoT sensors, building automation systems, and grid-interactive efficient buildings (GEB).',
+    syllabus:'#'
+  },
+  {
+    code:'AREN 430', name:'Hygrothermal Analysis of Building Envelopes', dept:'AREN',
+    college:'Engineering', classification:'inclusive',
+    sdgs:[7,11],
+    desc:'Heat and mass transfer on and through building envelopes; solar loads, internal heat gains, and estimation of space cooling and heating loads.',
+    syllabus:'#'
+  },
+  {
+    code:'AREN 440', name:'HVAC Design', dept:'AREN',
+    college:'Engineering', classification:'focused',
+    sdgs:[7,11,13],
+    desc:'Project-based design of mechanical systems from programming through working documents; HVAC schematic design, system selection, energy analysis, and environmental and human comfort considerations.',
+    syllabus:'#'
+  },
+  {
+    code:'AREN 485', name:'Directed Studies (Upper)', dept:'AREN',
+    college:'Engineering', classification:'non',
+    sdgs:[],
+    desc:'Directed individual study within architectural engineering at the junior/senior level. Topics vary.',
+    syllabus:'#'
+  },
+  {
+    code:'AREN 489', name:'Special Topics (Upper)', dept:'AREN',
+    college:'Engineering', classification:'non',
+    sdgs:[],
+    desc:'Selected advanced topics in an identified area of architectural engineering. May be repeated for credit.',
+    syllabus:'#'
+  },
+  {
+    code:'AREN 491', name:'Research', dept:'AREN',
+    college:'Engineering', classification:'non',
+    sdgs:[],
+    desc:'Faculty-directed research in architectural engineering. May be repeated for credit.',
+    syllabus:'#'
+  }
+];
+
+// ── STATE ──
+let activeSdgs = new Set();
+let filtered = [...COURSES];
+
+// ── STATS ──
+function updateStats() {
+  const sus = COURSES.filter(c => c.classification !== 'non');
+  document.getElementById('stat-total').textContent = sus.length;
+  document.getElementById('stat-focused').textContent = COURSES.filter(c=>c.classification==='focused').length;
+  document.getElementById('stat-inclusive').textContent = COURSES.filter(c=>c.classification==='inclusive').length;
+  const allSdgs = new Set(COURSES.flatMap(c=>c.sdgs));
+  document.getElementById('stat-sdgs').textContent = allSdgs.size;
+}
+
+// ── SDG PILLS ──
+function buildSdgPills() {
+  const used = new Set(COURSES.flatMap(c=>c.sdgs));
+  const wrap = document.getElementById('sdg-pills');
+  // All SDGs button
+  const all = document.createElement('span');
+  all.className = 'sdg-pill active';
+  all.textContent = 'All SDGs';
+  all.dataset.sdg = '0';
+  all.addEventListener('click', () => {
+    activeSdgs.clear();
+    render();
+    updatePillStates();
+  });
+  wrap.appendChild(all);
+
+  [...used].sort((a,b)=>a-b).forEach(sdg => {
+    const pill = document.createElement('span');
+    pill.className = 'sdg-pill inactive';
+    pill.textContent = `SDG ${sdg}: ${SDG_LABELS[sdg]}`;
+    pill.dataset.sdg = sdg;
+    pill.addEventListener('click', () => {
+      if (activeSdgs.has(sdg)) activeSdgs.delete(sdg);
+      else activeSdgs.add(sdg);
+      render();
+      updatePillStates();
+    });
+    wrap.appendChild(pill);
+  });
+}
+
+function updatePillStates() {
+  document.querySelectorAll('.sdg-pill').forEach(p => {
+    const sdg = parseInt(p.dataset.sdg);
+    if (sdg === 0) {
+      p.className = 'sdg-pill ' + (activeSdgs.size === 0 ? 'active' : 'inactive');
+    } else {
+      p.className = 'sdg-pill ' + (activeSdgs.has(sdg) ? 'active' : 'inactive');
+    }
+  });
+}
+
+// ── DEPT FILTER ──
+function buildDeptFilter() {
+  const depts = [...new Set(COURSES.map(c=>c.dept))].sort();
+  const sel = document.getElementById('filter-dept');
+  depts.forEach(d => {
+    const o = document.createElement('option');
+    o.value = d; o.textContent = d;
+    sel.appendChild(o);
+  });
+}
+
+// ── RENDER ──
+function render() {
+  const search = document.getElementById('search').value.toLowerCase();
+  const cls = document.getElementById('filter-class').value;
+  const dept = document.getElementById('filter-dept').value;
+  const sort = document.getElementById('sort').value;
+
+  filtered = COURSES.filter(c => {
+    const matchSearch = !search ||
+      c.code.toLowerCase().includes(search) ||
+      c.name.toLowerCase().includes(search) ||
+      c.desc.toLowerCase().includes(search) ||
+      c.sdgs.some(s => SDG_LABELS[s].toLowerCase().includes(search));
+    const matchClass = !cls || c.classification === cls;
+    const matchDept = !dept || c.dept === dept;
+    const matchSdg = activeSdgs.size === 0 || c.sdgs.some(s => activeSdgs.has(s));
+    return matchSearch && matchClass && matchDept && matchSdg;
+  });
+
+  // Sort
+  filtered.sort((a,b) => {
+    if (sort === 'name') return a.name.localeCompare(b.name);
+    if (sort === 'classification') {
+      const order = {focused:0,inclusive:1,non:2};
+      return order[a.classification] - order[b.classification];
+    }
+    return a.code.localeCompare(b.code);
+  });
+
+  document.getElementById('count').textContent = filtered.length;
+
+  const grid = document.getElementById('grid');
+  grid.innerHTML = '';
+
+  if (filtered.length === 0) {
+    grid.innerHTML = `<div class="empty"><div class="empty-icon">🌱</div><h3>No courses found</h3><p>Try adjusting your filters or search terms.</p></div>`;
+    return;
+  }
+
+  filtered.forEach((c, i) => {
+    const card = document.createElement('div');
+    card.className = `card ${c.classification}`;
+    card.style.animationDelay = `${i * 0.04}s`;
+
+    const badgeClass = c.classification === 'focused' ? 'badge-focused'
+      : c.classification === 'inclusive' ? 'badge-inclusive' : 'badge-non';
+    const badgeLabel = c.classification === 'focused' ? '● Focused'
+      : c.classification === 'inclusive' ? '◐ Inclusive' : '○ Non-Sustainable';
+
+    const sdgHtml = c.sdgs.length
+      ? c.sdgs.map(s=>`<span class="sdg-tag">SDG ${s}</span>`).join('')
+      : '<span style="font-size:0.76rem;color:#bbb;">No SDGs</span>';
+
+    card.innerHTML = `
+      <div class="card-top">
+        <span class="course-code">${c.code} · ${c.dept}</span>
+        <span class="classification-badge ${badgeClass}">${badgeLabel}</span>
+      </div>
+      <div class="course-name">${c.name}</div>
+      <div class="course-desc">${c.desc}</div>
+      <div class="card-footer">
+        <div class="sdg-tags">${sdgHtml}</div>
+        <a class="syllabus-link" href="${c.syllabus}">Syllabus ↗</a>
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+}
+
+// ── INIT ──
+buildSdgPills();
+buildDeptFilter();
+updateStats();
+render();
+
+document.getElementById('search').addEventListener('input', render);
+document.getElementById('filter-class').addEventListener('change', render);
+document.getElementById('filter-dept').addEventListener('change', render);
+document.getElementById('sort').addEventListener('change', render);
+</script>
+</body>
+</html>
