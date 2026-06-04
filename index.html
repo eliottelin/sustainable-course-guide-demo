@@ -342,6 +342,10 @@
     transform: translateY(12px);
     animation: cardIn 0.4s ease forwards;
   }
+  .card { outline: none; }
+  .card:focus { box-shadow: 0 0 0 3px rgba(101,147,63,0.15); }
+  .card.expanded { transform: none; }
+  .card.expanded .course-desc { -webkit-line-clamp: unset; line-clamp: unset; display:block; overflow:visible; }
   .card::before {
     content: '';
     position: absolute;
@@ -418,6 +422,10 @@
     overflow: hidden;
     margin-bottom: 14px;
 }
+
+  /* make course-desc readable when expanded */
+  .card .course-desc { max-height: 4.8em; }
+  .card.expanded .course-desc { max-height: none; }
 
   .card-footer {
     display: flex;
@@ -577,9 +585,9 @@
 </div>
 
 <div class="legend-wrap">
-  <div class="legend-item"><div class="legend-dot dot-focused"></div> Sustainability Focused — sustainability is central to the course</div>
-  <div class="legend-item"><div class="legend-dot dot-inclusive"></div> Sustainability Inclusive — sustainability addressed but not central</div>
-  <div class="legend-item"><div class="legend-dot dot-non"></div> Non-Sustainable — no significant sustainability content</div>
+  <div class="legend-item"><div class="legend-dot dot-focused"></div> Sustainability Focused: sustainability is central</div>
+  <div class="legend-item"><div class="legend-dot dot-inclusive"></div> Sustainability Inclusive: sustainability addressed, not central</div>
+  <div class="legend-item"><div class="legend-dot dot-non"></div> Non-Sustainable: no significant sustainability content</div>
 </div>
 
 <div class="sdg-filter-wrap">
@@ -755,7 +763,7 @@ let filtered = [...COURSES];
 // ── STATS ──
 function updateStats() {
   const sus = COURSES.filter(c => c.classification !== 'non');
-  document.getElementById('stat-total').textContent = sus.length;
+  document.getElementById('stat-total').textContent = COURSES.length;
   document.getElementById('stat-focused').textContent = COURSES.filter(c=>c.classification==='focused').length;
   document.getElementById('stat-inclusive').textContent = COURSES.filter(c=>c.classification==='inclusive').length;
   const allSdgs = new Set(COURSES.flatMap(c=>c.sdgs));
@@ -874,7 +882,7 @@ function render() {
         <span class="classification-badge ${badgeClass}">${badgeLabel}</span>
       </div>
       <div class="course-name">${c.name}</div>
-      <div class="course-desc">${c.desc}</div>
+      <div class="course-desc" data-full-desc="${c.desc.replace(/"/g,'&quot;')}">${c.desc}</div>
       <div class="card-footer">
         <div class="sdg-tags">${sdgHtml}</div>
         <a class="syllabus-link" href="${c.syllabus}">Syllabus ↗</a>
@@ -883,6 +891,38 @@ function render() {
     grid.appendChild(card);
   });
 }
+
+// ── EXPAND / COLLAPSE HANDLING ──
+function toggleCardExpand(card) {
+  const desc = card.querySelector('.course-desc');
+  if (!desc) return;
+  const isExpanded = card.classList.toggle('expanded');
+  if (isExpanded) {
+    desc.textContent = desc.dataset.fullDesc;
+  } else {
+    // collapse back to truncated text (we keep original dataset)
+    const full = desc.dataset.fullDesc;
+    // replicate CSS clamp fallback by truncating to ~220 chars for preview
+    desc.textContent = full.length > 220 ? full.slice(0,220).trim() + '…' : full;
+  }
+}
+
+// Delegate click/keyboard for cards
+document.addEventListener('click', (e) => {
+  const card = e.target.closest('.card');
+  if (!card) return;
+  // ignore clicks on links
+  if (e.target.closest('a')) return;
+  toggleCardExpand(card);
+});
+
+document.addEventListener('keydown', (e) => {
+  if (e.key !== 'Enter' && e.key !== ' ') return;
+  const active = document.activeElement.closest ? document.activeElement.closest('.card') : null;
+  if (!active) return;
+  e.preventDefault();
+  toggleCardExpand(active);
+});
 
 // ── INIT ──
 buildSdgPills();
